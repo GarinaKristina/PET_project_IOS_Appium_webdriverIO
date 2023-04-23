@@ -1,7 +1,7 @@
-import { productsHeader } from "../pageobjects/Catalog.screen.js"
-import { login, errorMessageText } from "../pageobjects/Login.screen";
-import { expandMenuButton } from "../pageobjects/BottomSideMenu.screen";
-import { loginMenuOption } from "../pageobjects/MainMenu.screen";
+import { productsHeader } from "../pageobjects/CatalogPage.js"
+import LoginPage from "../pageobjects/LoginPage.js";
+import { expandMenuButton } from "../pageobjects/BottomSideMenuPage.js";
+import { loginMenuOption } from "../pageobjects/MainMenuPage.js";
 
 describe("My Login Demo", () => {
   beforeEach(async () => {
@@ -10,14 +10,14 @@ describe("My Login Demo", () => {
   });
 
   it("should not login with invalid credentials", async () => {
-    login("wrongUser", "wrongPassword");
-    await expect(errorMessageText).toHaveText(
+    await LoginPage.login("wrongUser", "wrongPassword");
+    await expect(LoginPage.errorMessageText).toHaveText(
       "Provided credentials do not match any user in this service."
     );
   });
 
   it("should login with valid credentials", async () => {
-    login("bob@example.com", "10203040");
+    await LoginPage.login("bob@example.com", "10203040");
     await expect(productsHeader).toHaveText("Products");
   });
 });
